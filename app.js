@@ -23,7 +23,7 @@ const swaggerOptions = {
 
 const swaggerDoc = swaggerJsdoc(swaggerOptions);
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 mongoose.connect(process.env.MONGODB_URI,
     {
