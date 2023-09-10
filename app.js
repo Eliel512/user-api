@@ -3,9 +3,27 @@ const mongoose = require('mongoose');
 // const path = require('path');
 const morgan = require("morgan");
 const compression = require('compression');
-const appRoutes = require('./routes/app.router.js');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const appRoutes = require('./routes/app.router');
 
 app = express();
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'User API',
+            description: 'This API allows users to register, login, and authenticate using JWTs.',
+            version: '0.1.0',
+        },
+    },
+    apis: ['./routes/*.router.js'],
+};
+
+const swaggerDoc = swaggerJsdoc(swaggerOptions);
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 mongoose.connect(process.env.MONGODB_URI,
     {

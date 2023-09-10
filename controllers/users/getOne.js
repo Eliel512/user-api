@@ -13,6 +13,8 @@ module.exports = (req, res, next) => {
                 firstName: user.fname,
                 lastName: user.lname,
                 email: user.email,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
                 imageUrl: user.imageUrl
             });
         })

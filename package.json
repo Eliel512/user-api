@@ -18,6 +18,8 @@
     "mongoose": "^7.5.0",
     "mongoose-unique-validator": "^4.0.0",
     "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "validator": "^13.11.0"
   }
 }
