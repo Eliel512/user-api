@@ -1,4 +1,3 @@
-```
 # User API
 
 This API allows users to register, login, and authenticate using JWTs.
@@ -13,8 +12,6 @@ This API allows users to register, login, and authenticate using JWTs.
 
 1. Clone this repository
 2. Install the dependencies
-
-```
 
 ```
 npm install
