@@ -4,7 +4,7 @@ This API allows users to register, login, and authenticate using JWTs.
 
 ## Requirements
 
-* Node.js v16 or later
+* Node.js v14.20.1 or later
 * MongoDB Atlas
 * Mongoose
 
