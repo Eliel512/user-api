@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const User = require('../../models/user.model');
 
 const signupSchema = Joi.object({
     fname: Joi.string()
@@ -19,7 +20,7 @@ const signupSchema = Joi.object({
         .required()
 });
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     const { error, value } = signupSchema.validate({
         fname: req.body.firstName,
         lname: req.body.lastName,
@@ -30,5 +31,15 @@ module.exports = (req, res, next) => {
         console.log(error.details);
         return res.status(400).json(error.details);
     }
-    next();
+    User.exists({ email: req.body.email })
+        .then(userExists => {
+            if(userExists){
+                return res.status(409).json({ message: 'Addresse email déja utilisée' });
+            }
+            next();
+        })
+        .catch(error => {
+            console.log(error);
+            return res.status(500).json({ message: 'Une erreur est survenue' });
+        });
 };

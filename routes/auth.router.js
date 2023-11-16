@@ -201,6 +201,17 @@ router.get('/', auth, getOne);
  *                  type: string
  *                  description: A message describing the error.
  * 
+ *       409:
+ *        description: The email already exists.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: A message describing the error.
+ * 
  *       500:
  *         description: Internal Server Error.
  *         content:
