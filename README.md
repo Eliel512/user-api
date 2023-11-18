@@ -23,6 +23,7 @@ npm install
 
 ```
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/<database-name>
+RENDER_EXTERNAL_URL=<API URL>
 ```
 
 2. Start the API
@@ -48,7 +49,7 @@ To register a new user, send a POST request to the `/api/users/signup` endpoint 
 ```
 {
   "firstName": "John",
-  "lastName": "Doe"
+  "lastName": "Doe",
   "email": "johndoe@example.com",
   "password": "password"
 }
@@ -107,11 +108,33 @@ The response will be a JSON object with the following properties:
 
 * `found`: A boolean indicating whether the property was found or not
 
+### Edit
+
+To edit an existing user, send a POST request to the `/api/users/edit` endpoint with the following form-data body (None of these fields are required but the request body cannot be empty):
+
+```
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@example.com",
+  "password": "password",
+  "file": The user profile picture
+}
+```
+
+The response will be a JSON object with the following properties:
+
+* `_id`: The user ID
+* `firstName`: The user firstname
+* `lastName`: The user lastname
+* `email`: The user email
+* `imageUrl`: The user profile picture url
+
 ## Example
 
 The following code shows how to register a new user, login, and authenticate a user:
 
-```
+```javascript
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");

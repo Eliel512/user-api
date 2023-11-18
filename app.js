@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 // const path = require('path');
 const morgan = require("morgan");
@@ -34,7 +35,7 @@ mongoose.connect(process.env.MONGODB_URI,
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -48,6 +49,7 @@ app.use(morgan("tiny"));
 app.use(compression());
 
 // app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/profils', express.static(path.join(__dirname, 'profils')));
 
 app.use('/api', appRoutes);
 

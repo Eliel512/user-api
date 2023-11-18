@@ -3,12 +3,15 @@ const router = express.Router();
 
 const signinMiddleware = require('../middlewares/users/signin');
 const signupMiddleware = require('../middlewares/users/signup');
+const editMiddleware = require('../middlewares/users/edit');
+const multer = require('../middlewares/users/profil.multer');
 const auth = require('../middlewares/users/auth');
 
 const signup = require('../controllers/users/signup');
 const signin = require('../controllers/users/signin');
 const check = require('../controllers/users/check');
 const getOne = require('../controllers/users/getOne');
+const edit = require('../controllers/users/edit');
 
 /**
  * @swagger
@@ -259,7 +262,7 @@ router.post('/signup', signupMiddleware, signup);
  *                   type: objectid
  *                   description: The user ID
  *                 firstName:
- *                   type: string
+ *                   type: string    - Envoyer photo profil utilisateur
  *                   description: The user firstname
  *                 lastName:
  *                   type: string
@@ -295,5 +298,96 @@ router.post('/signup', signupMiddleware, signup);
  *                   description: A message describing the error.
  */
 router.post('/signin', signinMiddleware, signin);
+
+/**
+ * @swagger
+ *
+ *   /api/users/edit:
+ *   post:
+ *     operationId: editUser
+ *     description: Edit an existing user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *                 description: The user firstname
+ *               lastName:
+ *                 type: string
+ *                 description: The user lastname
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: The user email
+ *               password:
+ *                 type: string
+ *                 description: The user password
+ *               file:
+ *                  type: file
+ *                  description: The user profile picture
+ *
+ *     responses:
+ *       200:
+ *         description: User was edited successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: objectid
+ *                   description: The user ID
+ *                 firstName:
+ *                   type: string
+ *                   description: The user firstname
+ *                 lastName:
+ *                   type: string
+ *                   description: The user lastname
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                   description: The user email
+ *                 imageUrl:
+ *                   type: string
+ *                   description: The user profile picture url
+ * 
+ *       400:
+ *        description: The request body was invalid.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: A message describing the error.
+ * 
+ *       409:
+ *        description: The email already exists.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: A message describing the error.
+ * 
+ *       500:
+ *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message describing the error.
+ */
+router.post('/edit', auth, multer, editMiddleware, edit);
 
 module.exports = router;
