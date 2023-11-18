@@ -41,7 +41,7 @@ module.exports = (req, res, next) => {
             }
             res.locals.value = value;
             if(req.file){
-                res.locals.value.imageUrl = process.env.RENDER_EXTERNAL_URL + path.join(
+                res.locals.value.imageUrl = process.env.RENDER_EXTERNAL_URL + '/' + path.join(
                     'profils', res.locals.userId, req.file.filename
                     );
             }
